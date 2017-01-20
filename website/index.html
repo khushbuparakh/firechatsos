@@ -190,9 +190,11 @@
   <script>
     // Initialize Firebase SDK
     var config = {
-        apiKey: "AIzaSyDFlsisAa2yeDhRjSPdoC6Ez0UjOrSf9sc",
-        authDomain: "firechat-demo-app.firebaseapp.com",
-        databaseURL: "https://firechat-demo-app.firebaseio.com"
+        apiKey: "AIzaSyBnzQN6P5AQc9JJaF77HgSwH4FIO1Scc7E",
+        authDomain: "sosysters.firebaseapp.com",
+        databaseURL: "https://sosysters.firebaseio.com"
+        storageBucket: "sosysters.appspot.com",
+        messagingSenderId: "529694633403"
     };
     firebase.initializeApp(config);
 
@@ -227,20 +229,28 @@
     function login() {
       authModal.modal('hide');
 
-      // Log the user in via Twitter
-      var provider = new firebase.auth.TwitterAuthProvider();
-      firebase.auth().signInWithPopup(provider).catch(function(error) {
-        console.log("Error authenticating user:", error);
-      });
+      // Log the user in via Facebook
+
+      var provider = new firebase.auth.FacebookAuthProvider();
+      
     }
 
-    function logout() {
-      firebase.auth().signOut().then(function() {
-        location.reload();
-      }).catch(function(error) {
-        console.log("Error signing user out:", error);
-      });
-    }
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+  var token = result.credential.accessToken;
+  // The signed-in user info.
+  var user = result.user;
+  // ...
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
   </script>
 
   <!-- Twitter / Facebook / Google -->
